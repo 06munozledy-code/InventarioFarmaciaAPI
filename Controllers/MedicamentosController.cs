@@ -2,15 +2,14 @@
 
 namespace InventarioFarmaciaAPI.Controllers
 {
-    [Route("api/[controller]")] // Define que la ruta empieza por 'api/Medicamentos'
     [ApiController]
+    [Route("api/[controller]")]
     public class MedicamentosController : ControllerBase
     {
-        // Al poner [HttpGet] aquí, le dices que este método responde a GET api/Medicamentos
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult ObtenerMedicamentos()
         {
-            return Ok("La API de Farmacia está funcionando correctamente.");
+            return Ok("Lista de medicamentos");
         }
     }
 }
