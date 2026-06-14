@@ -1,21 +1,23 @@
+﻿using InventarioFarmaciaAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using InventarioFarmaciaAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configuración de la conexión a la base de datos
-// Asegúrate de que el nombre de conexión en appsettings.json sea 'DefaultConnection'
-builder.Services.AddDbContext<FarmaciaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// 2. Servicios básicos
+// Controllers
 builder.Services.AddControllers();
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Base de datos (SQLite)
+builder.Services.AddDbContext<FarmaciaContext>(options =>
+    options.UseSqlite("Data Source=farmacia.db")
+);
+
 var app = builder.Build();
 
-// 3. Configuración del entorno
+// Swagger UI
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,9 +25,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
 
-// 4. Mapeo de controladores
 app.MapControllers();
 
 app.Run();
